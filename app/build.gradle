@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -23,12 +24,12 @@ android {
 
     productFlavors {
         v100 {
-            manifestPlaceholders = [app_name: "testJenkins_v1009_${BUILD_TYPE}", icon: "@mipmap/start_record"]
+            manifestPlaceholders = [app_name: "testJenkins_v1009_${BUILD_TYPE1}", icon: "@mipmap/start_record"]
             applicationId "com.test.testjenkins.v100"
         }
 
         v200 {
-            manifestPlaceholders = [app_name: "testJenkins_v200_${BUILD_TYPE}", icon: "@mipmap/start_record2"]
+            manifestPlaceholders = [app_name: "testJenkins_v200_${BUILD_TYPE1}", icon: "@mipmap/start_record2"]
             applicationId "com.test.testjenkins.v200"
         }
 
@@ -60,7 +61,7 @@ android {
     applicationVariants.all {
         variant ->
             variant.outputs.all {
-                def apkName = "qq_v100_${BUILD_TYPE}"
+                def apkName = "qq_v100_${BUILD_TYPE1}"
                 outputFileName = apkName + ".apk"
             }
     }
