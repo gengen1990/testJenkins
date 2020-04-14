@@ -12,6 +12,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         flavorDimensions "default"
+        manifestPlaceholders= [app_name: "testJenkins_${BUILD_TYPE1}", icon: "@mipmap/ic_launcher"]
     }
 
 
