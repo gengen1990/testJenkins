@@ -23,14 +23,16 @@ android {
 
     productFlavors {
         v100 {
-            manifestPlaceholders = [app_name: "testJenkins_v1009", icon: "@mipmap/start_record"]
+            manifestPlaceholders = [app_name: "testJenkins_v1009_${BUILD_TYPE}", icon: "@mipmap/start_record"]
             applicationId "com.test.testjenkins.v100"
         }
 
         v200 {
-            manifestPlaceholders = [app_name: "testJenkins_v200", icon: "@mipmap/start_record2"]
+            manifestPlaceholders = [app_name: "testJenkins_v200_${BUILD_TYPE}", icon: "@mipmap/start_record2"]
             applicationId "com.test.testjenkins.v200"
         }
+
+        println "BUILD_TYPE:${BUILD_TYPE}"
 
     }
 
@@ -43,7 +45,7 @@ android {
             assets
                     { srcDirs 'src/v100/assets' }
             res {
-                    srcDirs 'src/v100/res'
+                srcDirs 'src/v100/res'
             }
         }
         v200 {
@@ -54,16 +56,23 @@ android {
             }
         }
     }
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                def apkName = "qq_v100_${BUILD_TYPE}"
+                outputFileName = apkName + ".apk"
+            }
+    }
 }
 
-println "BUILD_TYPE:${BUILD_TYPE}"
 
 dependencies {
 
 //    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    v100Implementation fileTree(dir: 'libs',include:['aliyun-oss-sdk-android-2.9.2.jar','okio-2.1.0.jar'])
+    v100Implementation fileTree(dir: 'libs', include: ['aliyun-oss-sdk-android-2.9.2.jar', 'okio-2.1.0.jar'])
 //    v200Implementation files('libs/modulealiossupload-debug.aar')
-    v200Implementation fileTree(dir: 'libs',include:['okio-2.1.0.jar'])
+    v200Implementation fileTree(dir: 'libs', include: ['okio-2.1.0.jar'])
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
