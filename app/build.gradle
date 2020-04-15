@@ -12,30 +12,24 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         flavorDimensions "default"
-        manifestPlaceholders= [app_name: "testJenkins_${BUILD_TYPE1}", icon: "@mipmap/ic_launcher"]
+        manifestPlaceholders= [app_name: "testJenkins_${BUILD_TYPE}", icon: "@mipmap/ic_launcher"]
     }
 
+    signingConfigs {
+        config {
+            storeFile file(KEY_PATH)
+            storePassword KEY_PASS
+            keyAlias ALIAS_NAME
+            keyPassword ALIAS_PASS
+        }
+    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
-    }
-
-    productFlavors {
-        v100 {
-            manifestPlaceholders = [app_name: "testJenkins_v1009_${BUILD_TYPE1}", icon: "@mipmap/start_record"]
-            applicationId "com.test.testjenkins.v100"
-        }
-
-        v200 {
-            manifestPlaceholders = [app_name: "testJenkins_v200_${BUILD_TYPE1}", icon: "@mipmap/start_record2"]
-            applicationId "com.test.testjenkins.v200"
-        }
-
-        println "BUILD_TYPE:${BUILD_TYPE}"
-
     }
 
     sourceSets {
@@ -43,26 +37,12 @@ android {
             assets
                     { srcDirs 'src/main/assets' }
         }
-        v100 {
-            assets
-                    { srcDirs 'src/v100/assets' }
-            res {
-                srcDirs 'src/v100/res'
-            }
-        }
-        v200 {
-            assets
-                    { srcDirs 'src/v200/assets' }
-            res {
-                srcDirs 'src/v200/res'
-            }
-        }
     }
 
     applicationVariants.all {
         variant ->
             variant.outputs.all {
-                def apkName = "qq_v100_${BUILD_TYPE1}"
+                def apkName = "${APP_NAME}_${VERSION_NAME}_${BUILD_TYPE}"
                 outputFileName = apkName + ".apk"
             }
     }
@@ -71,15 +51,12 @@ android {
 
 dependencies {
 
-//    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    v100Implementation fileTree(dir: 'libs', include: ['aliyun-oss-sdk-android-2.9.2.jar', 'okio-2.1.0.jar'])
-//    v200Implementation files('libs/modulealiossupload-debug.aar')
-    v200Implementation fileTree(dir: 'libs', include: ['okio-2.1.0.jar'])
+    implementation fileTree(dir: 'libs', include: MODULE_LIST)
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
