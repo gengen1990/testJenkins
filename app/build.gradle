@@ -12,7 +12,7 @@ android {
         versionName "${VERSION_NAME}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         flavorDimensions "default"
-        manifestPlaceholders= [app_name: "${APP_NAME}", icon: "@mipmap/ic_launcher"]
+        manifestPlaceholders= [app_name: "${APP_NAME}", icon: "@mipmap/icon"]
 
         println "APPLICATION_ID:"+APPLICATION_ID
         println "VERSION_CODE:"+VERSION_CODE
