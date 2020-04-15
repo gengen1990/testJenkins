@@ -5,14 +5,19 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.test.testjenkins"
+        applicationId "${APPLICATION_ID}"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode new Integer(VERSION_CODE)
+        versionName "${VERSION_NAME}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         flavorDimensions "default"
-        manifestPlaceholders= [app_name: "testJenkins_${BUILD_TYPE}", icon: "@mipmap/ic_launcher"]
+        manifestPlaceholders= [app_name: "${APP_NAME}_${BUILD_TYPE}", icon: "@mipmap/ic_launcher"]
+
+        println "APPLICATION_ID:"+APPLICATION_ID
+        println "VERSION_CODE:"+VERSION_CODE
+        println "VERSION_NAME:"+VERSION_NAME
+        println "VERSION_NAME:"+VERSION_NAME
     }
 
     signingConfigs {
@@ -30,12 +35,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.config
+        }
     }
 
     sourceSets {
         main {
             assets
-                    { srcDirs 'src/main/assets' }
+                    { srcDirs 'src/main/assets'}
         }
     }
 
@@ -50,8 +61,9 @@ android {
 
 
 dependencies {
+    println "MODULE_LIST:"+MODULE_LIST
 
-    implementation fileTree(dir: 'libs', include: MODULE_LIST)
+    implementation fileTree(dir: 'libs', include: Eval.me(MODULE_LIST))//(MODULE_LIST as List)
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
